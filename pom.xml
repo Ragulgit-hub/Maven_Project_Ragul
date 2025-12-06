@@ -1,18 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ragul</groupId>
-    <artifactId>folder-generator-project</artifactId>
+    <artifactId>simple-message-project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <build>
         <plugins>
-
-            <!-- Plugin to run Javascript code to create folders -->
+            <!-- Simple plugin that prints a message during build -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -20,41 +18,22 @@
 
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <id>print-message</id>
+                        <phase>validate</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
-
                         <configuration>
                             <target>
-                                <script language="javascript"><![CDATA[
-                                    var base = project.getBasedir().getAbsolutePath();
-
-                                    for (var i = 1; i <= 10; i++) {
-                                        var folderName = base + "/Maven_Project_" + i;
-
-                                        project.log("Creating folder: " + folderName);
-
-                                        java.nio.file.Files.createDirectories(
-                                            java.nio.file.Paths.get(folderName)
-                                        );
-
-                                        var message = "Welcome to the Maven_Project_" + i + " done by Ragul";
-                                        var filePath = java.nio.file.Paths.get(folderName + "/note.txt");
-
-                                        java.nio.file.Files.write(
-                                            filePath,
-                                            message.getBytes(java.nio.charset.StandardCharsets.UTF_8)
-                                        );
-                                    }
-                                ]]></script>
+                                <echo>
+                                    Hello, Welcome to Ragul's Maven Project.
+                                    Have a Wonderful day and Keep smiling. 🙂
+                                </echo>
                             </target>
                         </configuration>
-
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
