@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ragul</groupId>
+    <artifactId>folder-generator-project</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <build>
+        <plugins>
+
+            <!-- Plugin to run scripting tasks -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase> <!-- Runs during mvn package -->
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+
+                        <configuration>
+                            <target>
+                                <!-- LOOP to create folders & files -->
+                                <script language="javascript"><![CDATA[
+                                    for (var i = 1; i <= 10; i++) {
+                                        var folderName = "Maven_Project_" + i;
+                                        project.log("Creating folder: " + folderName);
+
+                                        // Create folder
+                                        java.nio.file.Files.createDirectories(
+                                            java.nio.file.Paths.get(folderName)
+                                        );
+
+                                        // Create note file
+                                        var message = "Welcome to the " + folderName + " done by Ragul";
+                                        var filePath = java.nio.file.Paths.get(folderName + "/note.txt");
+
+                                        java.nio.file.Files.write(
+                                            filePath,
+                                            message.getBytes(java.nio.charset.StandardCharsets.UTF_8)
+                                        );
+                                    }
+                                ]]></script>
+
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
